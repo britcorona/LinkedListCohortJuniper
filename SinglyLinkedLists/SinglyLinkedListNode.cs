@@ -46,15 +46,13 @@ namespace SinglyLinkedLists
 
         public SinglyLinkedListNode(string value)
         {
-            //throw new NotImplementedException(); //Delete this
-
             this.value = value;
 
             // Used by the visualizer:
             allNodes.Add(this);
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return value;
         }
@@ -67,7 +65,21 @@ namespace SinglyLinkedLists
 
         public bool IsLast()
         {
-            throw new NotImplementedException();
+            if (null == Next)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            //return base.Equals(obj);
+            SinglyLinkedListNode llobj = obj as SinglyLinkedListNode;
+            return obj.Equals(obj);
         }
     }
 }
