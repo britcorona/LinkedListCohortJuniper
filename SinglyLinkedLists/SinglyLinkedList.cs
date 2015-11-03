@@ -45,7 +45,12 @@ namespace SinglyLinkedLists
             }
             else
             {
-                // Actually attach new nodes to the end of the list.
+                SinglyLinkedListNode current_node = firstNode;
+                while (!current_node.IsLast())
+                {
+                    current_node = current_node.Next;
+                }
+                current_node.Next = new SinglyLinkedListNode(value);
             }
         }
 
@@ -57,7 +62,40 @@ namespace SinglyLinkedLists
 
         public string ElementAt(int index)
         {
-            throw new NotImplementedException();
+            if (firstNode != null && index >=0)
+            {
+                SinglyLinkedListNode node = firstNode;
+                for (int i = 0; i <= index; i++)
+                {
+                    if (index == i)
+                    {
+                        break;
+                    }
+                    if (node.Next == null)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    node = node.Next;
+                }
+
+                return node.Value;
+            } else if (index < 0)
+            {
+                //Count the nodes
+                SinglyLinkedListNode node = firstNode;
+                int length = 1;
+                while(!node.IsLast())
+                {
+                    length++;
+                    node = node.Next;
+                }
+
+                return this.ElementAt(length+index);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         public string First()
@@ -88,7 +126,14 @@ namespace SinglyLinkedLists
         // HINT 3: If you highlight code and right click, you can use the refactor menu to extract a method for you...
         public string Last()
         {
-            throw new NotImplementedException();
+            if (firstNode == null)
+            {
+                return null;
+            }
+            else
+            {
+                return this.ElementAt(-1);
+            }
         }
 
         public void Remove(string value)
@@ -103,7 +148,70 @@ namespace SinglyLinkedLists
 
         public string[] ToArray()
         {
-            throw new NotImplementedException();
+            //string nextString = ToString();
+            SinglyLinkedListNode node = firstNode;
+            if (node != null) {
+                int length = 1;
+                while (!node.IsLast())
+                {
+                    length++;
+                    node = node.Next;
+                }
+                string[] answer = new string[length];
+                SinglyLinkedListNode node2 = firstNode;
+                for (int i = 0; i < length; i++)
+                {
+                    answer[i] = ElementAt(i);
+                }
+                return answer;
+            } 
+            else
+            {
+                return new string[] { };
+            }
+        }
+
+        public override string ToString()
+        {
+            string left = "{";
+            string right = "}";
+            string space = " ";
+            string comma = ",";
+            string quote = "\"";
+            StringBuilder s = new StringBuilder(left);
+            SinglyLinkedListNode current_node = firstNode;
+            while (current_node != null )
+            {
+                s.Append(space);
+                s.Append(quote);
+                s.Append(current_node.Value);
+                s.Append(quote);
+                if (current_node.IsLast())
+                {
+                    break;
+                }
+                else
+                {
+                    s.Append(comma);
+                }
+                current_node = current_node.Next;
+            }
+            s.Append(space+right);
+            return s.ToString();
+
+            /*
+            if (firstNode == null)
+            {
+                return "{ }";
+            }
+            else
+            {
+                StringBuilder s = new StringBuilder("{ "); //allows you to build strings without eating all your computers memory
+                s.Append("\"" + firstNode.Value + "\"");
+                s.Append(" }");
+                return s.ToString();
+            }
+            */
         }
     }
 }

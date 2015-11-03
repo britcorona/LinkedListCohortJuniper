@@ -60,11 +60,28 @@ namespace SinglyLinkedLists
         // READ: http://msdn.microsoft.com/en-us/library/system.icomparable.compareto.aspx
         public int CompareTo(Object obj)
         {
-            throw new NotImplementedException();
+
+            SinglyLinkedListNode node = obj as SinglyLinkedListNode;
+            if (obj != null)
+            {
+                return this.value.CompareTo(node.value);
+            } 
+            else
+            {
+                return 1;
+            }
+
         }
 
         public bool IsLast()
         {
+            /* Eliza's solution
+            bool result = (Next == null);
+            return result;
+            --or-- */
+            return Next == null;
+            
+            /*
             if (null == Next)
             {
                 return true;
@@ -73,13 +90,27 @@ namespace SinglyLinkedLists
             {
                 return false;
             }
+            */
         }
 
         public override bool Equals(object obj)
         {
-            //return base.Equals(obj);
-            SinglyLinkedListNode llobj = obj as SinglyLinkedListNode;
-            return obj.Equals(obj);
+            
+            SinglyLinkedListNode node = obj as SinglyLinkedListNode;
+            if (node == null)
+            {
+                return false;
+            }
+            else
+            {
+                return value.Equals(node.value);
+                //return (this.Value == other.Value);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
         }
     }
 }
